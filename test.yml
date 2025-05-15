@@ -39,5 +39,11 @@
     - name: Copy files on the public path server
       ansible.builtin.copy:
         src: "{{ remote_temp_path }}/"
-        dest: ""
+        dest: "{{ server_path }}"
+
+    - name: Delete temp directory
+      ansible.builtin.file:
+        path: "{{ remote_temp_path }}"
+        state: absent
+    
     
