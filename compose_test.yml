@@ -1,4 +1,4 @@
-service:
+services:
   s3-app-test:
     build:
       context: .
