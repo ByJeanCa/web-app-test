@@ -2,9 +2,8 @@ FROM redhat/ubi9-minimal
 
 WORKDIR /tests
 
-COPY app.py install_dependencies.sh ./
+COPY app.py install_dependencies.sh test_app.py ./
 COPY public/ public/
-COPY test_app.py ./
 
 RUN chmod +x install_dependencies.sh && ./install_dependencies.sh
 
