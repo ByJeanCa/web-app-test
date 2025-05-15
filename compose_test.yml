@@ -9,7 +9,7 @@ services:
       - jenkins-net
     env_file:
       - .env                        
-    command: ["pytest", "test_app.py"] 
+    command: ["pytest", "test.py"] 
 
 networks:
   jenkins-net:
