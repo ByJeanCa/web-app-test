@@ -1,14 +1,15 @@
-service:
+services:
   s3-app-test:
     build:
       context: .
-      dockerfile: dockerfile
+      dockerfile: Dockerfile 
     ports:
       - "5000:5000"
     networks:
       - jenkins-net
     env_file:
-      - .env
+      - .env                        
+    command: ["pytest", "test_app.py"] 
 
 networks:
   jenkins-net:
