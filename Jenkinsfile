@@ -14,5 +14,13 @@ pipeline {
                 sh "docker compose -f compose_test.yml down"
             }
         }
+        stage("Deploy") {
+            when {
+                branch 'main'
+            }
+            steps {
+
+            }
+        }
     }
 }
