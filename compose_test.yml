@@ -1,0 +1,15 @@
+service:
+  s3-app-test:
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      - jenkins-net
+    env_file:
+      - .env
+
+networks:
+  jenkins-net:
+    external: true
