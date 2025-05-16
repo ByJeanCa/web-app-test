@@ -6,9 +6,7 @@ services:
     ports:
       - "5000:5000"
     networks:
-      - jenkins-net
-    env_file:
-      - .env                        
+      - jenkins-net                      
     command: ["pytest", "test.py"] 
 
 networks:
