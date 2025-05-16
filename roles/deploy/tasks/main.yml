@@ -43,6 +43,13 @@
     path: "{{ remote_temp_path }}"
     state: absent
 
+- name: Ensure S3_BUCKET env variable is present in app service
+  lineinfile:
+    path: /etc/environment
+    line: 'S3_BUCKET=s3-app-web-test1'
+    create: yes
+  notify: Restart flask app
+
 - name: Check server response
   ansible.builtin.uri:
     url: "http://{{ ip }}"
