@@ -5,18 +5,18 @@
 
 - name: Copy ZIP file to remote temp path
   ansible.builtin.copy:
-    src: "{{ local_compressed_files }}/app.zip"
-    dest: "{{ remote_temp_path }}/app.zip"
+    src: "{{ local_compressed_files }}/app.tar.gz"
+    dest: "{{ remote_temp_path }}/app.tar.gz"
     remote_src: yes
 
 - name: Unzip files on remote
   ansible.builtin.unarchive:
-    src: "{{ remote_temp_path }}/app.zip"
+    src: "{{ remote_temp_path }}/app.tar.gz"
     dest: "{{ remote_temp_path }}/"
 
 - name: Remove ZIP from remote
   ansible.builtin.file:
-    path: "{{ remote_temp_path }}/app.zip"
+    path: "{{ remote_temp_path }}/app.tar.gz"
     state: absent
 
 - name: Copy unzipped files to public path
