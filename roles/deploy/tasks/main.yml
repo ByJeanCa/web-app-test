@@ -7,12 +7,12 @@
   ansible.builtin.copy:
     src: "{{ local_compressed_files }}/app.zip"
     dest: "{{ remote_temp_path }}/app.zip"
+    remote_src: yes
 
 - name: Unzip files on remote
   ansible.builtin.unarchive:
     src: "{{ remote_temp_path }}/app.zip"
     dest: "{{ remote_temp_path }}/"
-    remote_src: yes
 
 - name: Remove ZIP from remote
   ansible.builtin.file:
@@ -23,7 +23,6 @@
   ansible.builtin.copy:
     src: "{{ remote_temp_path }}/"
     dest: "{{ server_path }}"
-    remote_src: yes
 
 - name: Delete remote temp directory
   ansible.builtin.file:

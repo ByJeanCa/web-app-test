@@ -25,7 +25,7 @@ pipeline {
          //     branch 'main'
         //   }
             steps {
-                sh 'zip -r compressed/app.zip app/*'
+                sh 'mkdir -p compressed && tar -czf compressed/app.tar.gz app/'
                 withCredentials([string(credentialsId: 'awx-cred', variable: 'AWS_TOKEN')]) {
                     sh '''
                     curl -k -X POST "http://host.docker.internal:8081/api/v2/job_templates/43/launch/" \\
