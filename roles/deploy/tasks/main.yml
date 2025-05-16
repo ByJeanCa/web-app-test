@@ -1,16 +1,3 @@
-- name: Get current date
-  set_fact:
-    current_date: "{{ lookup('pipe', 'date +%Y-%m-%d_%H-%M-%S') }}"
-
-- name: Compress files locally
-  ansible.builtin.archive:
-    path: "{{ local_files }}"
-    dest: "{{ local_compressed_files }}/file_{{ current_date }}.zip"
-    format: zip
-  register: compress_result
-  delegate_to: localhost
-  failed_when: compress_result.failed | default(false)
-
 - name: Ensure remote temp path exists
   ansible.builtin.file:
     path: "{{ remote_temp_path }}"
@@ -18,18 +5,18 @@
 
 - name: Copy ZIP file to remote temp path
   ansible.builtin.copy:
-    src: "{{ local_compressed_files }}/file_{{ current_date }}.zip"
-    dest: "{{ remote_temp_path }}/file_{{ current_date }}.zip"
+    src: "{{ local_compressed_files }}/app.zip"
+    dest: "{{ remote_temp_path }}/app.zip"
 
 - name: Unzip files on remote
   ansible.builtin.unarchive:
-    src: "{{ remote_temp_path }}/file_{{ current_date }}.zip"
+    src: "{{ remote_temp_path }}/app.zip"
     dest: "{{ remote_temp_path }}/"
     remote_src: yes
 
 - name: Remove ZIP from remote
   ansible.builtin.file:
-    path: "{{ remote_temp_path }}/file_{{ current_date }}.zip"
+    path: "{{ remote_temp_path }}/app.zip"
     state: absent
 
 - name: Copy unzipped files to public path

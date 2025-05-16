@@ -21,16 +21,17 @@ pipeline {
             }
         }
         stage("Deploy") {
-            when {
-                branch 'main'
-            }
+         //  when {
+         //     branch 'main'
+        //   }
             steps {
+                sh 'zip -r compressed/app.zip app/*'
                 withCredentials([string(credentialsId: 'awx-cred', variable: 'AWS_TOKEN')]) {
-                    sh """
-                    curl -k -X POST "http://localhost:8081/api/v2/job_templates/43/launch/" \\
+                    sh '''
+                    curl -k -X POST "http://host.docker.internal:8081/api/v2/job_templates/43/launch/" \\
                          -H "Content-Type: application/json" \\
-                         -H "Authorization: Bearer $AWS_TOKEN"
-                    """
+                         -H "Authorization: Bearer ${AWS_TOKEN}"
+                    '''
                 }
             }
         }
