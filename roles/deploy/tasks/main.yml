@@ -3,20 +3,11 @@
     path: "{{ remote_temp_path }}"
     state: directory
 
-- name: save pwd
-  command: pwd
-  register: actual_dir
-  remote_src: yes
-
-- name: debug
-  debug:
-    var: actual_dir
-
 - name: Copy ZIP file to remote temp path
   ansible.builtin.copy:
     src: "{{ local_compressed_files }}/app.tar.gz"
     dest: "{{ remote_temp_path }}/app.tar.gz"
-    remote_src: yes
+    delegate_to: localhost
 
 - name: Unzip files on remote
   ansible.builtin.unarchive:
