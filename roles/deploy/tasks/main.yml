@@ -6,6 +6,7 @@
 - name: save pwd
   command: pwd
   register: actual_dir
+  remote_src: yes
 
 - name: debug
   debug:
