@@ -1,4 +1,4 @@
-- imported_tasks: clone_repo.yml
+- import_tasks: clone_repo.yml
 
 - name: Get current date
   set_fact:
