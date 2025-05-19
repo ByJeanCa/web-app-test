@@ -8,7 +8,9 @@
   ansible.builtin.file:
     path: "{{ local_compressed_files }}"
     state: directory
-
+  delegate_to: localhost
+  become: false
+  
 - name: Compress app folder
   ansible.builtin.archive:
     path: "{{ local_files }}"
