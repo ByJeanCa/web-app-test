@@ -1,3 +1,16 @@
+- imported_tasks: clone_repo.yml
+
+- name: Get current date
+  set_fact:
+    current_date: "{{ lookup('pipe', 'date +%Y-%m-%d_%H-%M-%S') }}"
+
+- name: Compress app folder
+  ansible.builtin.archive:
+    path: "{{ local_files }}"
+    dest: "{{ local_compressed_files }}/app_{{ current_date }}.zip"
+    format: sip
+  delegate_to: localhost
+
 - name: Ensure remote temp path exists
   ansible.builtin.file:
     path: "{{ remote_temp_path }}"
@@ -5,24 +18,25 @@
 
 - name: Copy ZIP file to remote temp path
   ansible.builtin.copy:
-    src: "{{ local_compressed_files }}/app.tar.gz"
-    dest: "{{ remote_temp_path }}/app.tar.gz"
-    delegate_to: localhost
+    src: "{{ local_compressed_files }}/app_{{ current_date }}.zip"
+    dest: "{{ remote_temp_path }}/app_{{ current_date }}.zip"
 
 - name: Unzip files on remote
   ansible.builtin.unarchive:
-    src: "{{ remote_temp_path }}/app.tar.gz"
+    src: "{{ remote_temp_path }}/app_{{ current_date }}.zip"
     dest: "{{ remote_temp_path }}/"
+    remote_src: yes
 
 - name: Remove ZIP from remote
   ansible.builtin.file:
-    path: "{{ remote_temp_path }}/app.tar.gz"
+    path: "{{ remote_temp_path }}/app_{{ current_date }}.zip"
     state: absent
 
 - name: Copy unzipped files to public path
   ansible.builtin.copy:
     src: "{{ remote_temp_path }}/"
     dest: "{{ server_path }}"
+    remote_src: yes
 
 - name: Delete remote temp directory
   ansible.builtin.file:

@@ -1,0 +1,7 @@
+---
+- name: Clone app web respo
+  ansible.builtin.git:
+    repo: https://github.com/ByJeanCa/web-app-test.git
+    dest: ./app
+    version: main
+  delegate_to: localhost
