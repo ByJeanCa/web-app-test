@@ -1,12 +1,5 @@
 - import_tasks: clone_repo.yml
 
-- name: Enable and start flask service
-  systemd:
-    name: flask-app
-    enabled: true
-    state: started
-  become: true
-
 - name: Get current date
   set_fact:
     current_date: "{{ lookup('pipe', 'date +%Y-%m-%d_%H-%M-%S') }}"
@@ -57,6 +50,13 @@
   ansible.builtin.file:
     path: "{{ remote_temp_path }}"
     state: absent
+
+- name: Enable and start flask service
+  systemd:
+    name: flask-app
+    enabled: true
+    state: started
+  become: true
 
 - name: Ensure S3_BUCKET env variable is present in app service
   lineinfile:
