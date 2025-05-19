@@ -14,6 +14,8 @@
 - name: check files
   ansible.builtin.command: ls "{{ local_files }}"
   register: result
+  delegate_to: localhost
+  become: false
 
 - name: debug
   debug:
@@ -26,6 +28,16 @@
     format: gz
   delegate_to: localhost
   become: false
+
+- name: check files
+  ansible.builtin.command: ls "{{ local_compressed_files }}"
+  register: result
+  delegate_to: localhost
+  become: false
+
+- name: debug
+  debug:
+    msg: "{{ result }}"
 
 - name: Ensure remote temp path exists
   ansible.builtin.file:
