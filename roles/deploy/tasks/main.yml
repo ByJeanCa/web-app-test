@@ -4,6 +4,11 @@
   set_fact:
     current_date: "{{ lookup('pipe', 'date +%Y-%m-%d_%H-%M-%S') }}"
 
+- name: Ensure compressed dir exists
+  ansible.builtin.file:
+    path: "{{ local_compressed_files }}"
+    state: directory
+
 - name: Compress app folder
   ansible.builtin.archive:
     path: "{{ local_files }}"
