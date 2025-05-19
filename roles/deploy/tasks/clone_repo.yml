@@ -4,6 +4,7 @@
     path: /tmp/app
     state: directory
   delegate_to: localhost
+  become: false
 
 - name: Clone app web respo
   ansible.builtin.git:
