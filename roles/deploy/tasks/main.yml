@@ -30,7 +30,7 @@
     dest: "{{ remote_temp_path }}/app_{{ current_date }}.tar.gz"
 
 - name: Unzip files on remote
-  community.general.unzip::
+  ansible.builtin.unarchive:
     src: "{{ remote_temp_path }}/app_{{ current_date }}.tar.gz"
     dest: "{{ remote_temp_path }}/"
     remote_src: yes
