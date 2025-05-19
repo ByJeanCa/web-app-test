@@ -10,12 +10,12 @@
     state: directory
   delegate_to: localhost
   become: false
-  
+
 - name: Compress app folder
   ansible.builtin.archive:
     path: "{{ local_files }}"
-    dest: "{{ local_compressed_files }}/app_{{ current_date }}.zip"
-    format: zip
+    dest: "{{ local_compressed_files }}/app_{{ current_date }}.tar.gz"
+    format: gz
   delegate_to: localhost
   become: false
 
@@ -26,18 +26,18 @@
 
 - name: Copy ZIP file to remote temp path
   ansible.builtin.copy:
-    src: "{{ local_compressed_files }}/app_{{ current_date }}.zip"
-    dest: "{{ remote_temp_path }}/app_{{ current_date }}.zip"
+    src: "{{ local_compressed_files }}/app_{{ current_date }}.tar.gz"
+    dest: "{{ remote_temp_path }}/app_{{ current_date }}.tar.gz"
 
 - name: Unzip files on remote
-  ansible.builtin.unarchive:
-    src: "{{ remote_temp_path }}/app_{{ current_date }}.zip"
+  community.general.unzip::
+    src: "{{ remote_temp_path }}/app_{{ current_date }}.tar.gz"
     dest: "{{ remote_temp_path }}/"
     remote_src: yes
 
 - name: Remove ZIP from remote
   ansible.builtin.file:
-    path: "{{ remote_temp_path }}/app_{{ current_date }}.zip"
+    path: "{{ remote_temp_path }}/app_{{ current_date }}.tar.gz"
     state: absent
 
 - name: Copy unzipped files to public path
