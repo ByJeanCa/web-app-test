@@ -9,7 +9,7 @@
 - name: Clone app web respo
   ansible.builtin.git:
     repo: https://github.com/ByJeanCa/web-app-test.git
-    dest: tmp/app
+    dest: "{{ local_files }}"
     version: main
   delegate_to: localhost
   become: false
