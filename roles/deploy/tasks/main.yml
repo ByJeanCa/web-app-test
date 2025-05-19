@@ -1,5 +1,12 @@
 - import_tasks: clone_repo.yml
 
+- name: Enable and start flask service
+  systemd:
+    name: flask-app
+    enabled: true
+    state: started
+  become: true
+
 - name: Get current date
   set_fact:
     current_date: "{{ lookup('pipe', 'date +%Y-%m-%d_%H-%M-%S') }}"
