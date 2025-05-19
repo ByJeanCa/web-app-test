@@ -54,7 +54,7 @@
 - name: Ensure S3_BUCKET env variable is present in app service
   lineinfile:
     path: /etc/environment
-    line: 'S3_BUCKET=s3-app-web-test1'
+    line: 'S3_BUCKET=s3-app-web-test-1'
     create: yes
   notify: Restart flask app
 
