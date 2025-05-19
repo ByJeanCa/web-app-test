@@ -1,13 +1,5 @@
 - import_tasks: clone_repo.yml
 
-- name: Check whoami with sudo
-  ansible.builtin.command: sudo whoami
-  register: sudo_test
-  ignore_errors: true
-
-- debug:
-    var: sudo_test
-
 - name: Get current date
   set_fact:
     current_date: "{{ lookup('pipe', 'date +%Y-%m-%d_%H-%M-%S') }}"
@@ -18,6 +10,7 @@
     dest: "{{ local_compressed_files }}/app_{{ current_date }}.zip"
     format: zip
   delegate_to: localhost
+  become: false
 
 - name: Ensure remote temp path exists
   ansible.builtin.file:
