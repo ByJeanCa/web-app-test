@@ -8,7 +8,7 @@
   ansible.builtin.archive:
     path: "{{ local_files }}"
     dest: "{{ local_compressed_files }}/app_{{ current_date }}.zip"
-    format: sip
+    format: zip
   delegate_to: localhost
 
 - name: Ensure remote temp path exists
